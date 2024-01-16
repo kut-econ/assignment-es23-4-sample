@@ -1,7 +1,7 @@
 ---
 title: "進化社会学課題4"
 author: "工科太郎"
-date: "2024/1/12"
+date: "2024/1/17"
 output: html_document
 ---
 
@@ -16,7 +16,17 @@ A) 複数の初期値を格納したベクトルp0（次元数は任意)およ�
 ```{r assignment-4-A}
 conformist_plot <- function(p0,D) {
 # ここに関数のボディを書く
-  
+  gn <- 100
+  p <- matrix(nrow=length(p0),ncol=gn+1)
+  p[,1] <- p0
+  for(t in 1:gn) {
+    p[,t+1] <- p[,t] + D*p[,t]*(1-p[,t])*(2*p[,t]-1)    
+  }
+  for(i in 1:length(p0)) {
+    plot(0:gn,p[i,],col=i,xlim=c(0,gn),ylim=c(0,1),xlab='Generation',ylab='Frequency')
+    par(new=T)
+  }
+  par(new=F)
 }
 
 ```
@@ -25,10 +35,13 @@ B) 上で定義した関数`conformist_plot`を用いて、$p_0=0,0.1,0.2,0.3,\d
 
 ```{r assignment-4-B}
 # ここにコードを書く
+p0 <- seq(0,1,0.1)
+conformist_plot(p0,0.1)
 ```
 
 C) 上のBと同じことを、$D=-0.1$に対して行え。
 
 ```{r assignment-4-CC}
 # ここにコードを書く
+conformist_plot(p0,-0.1)
 ```
